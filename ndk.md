@@ -104,4 +104,5 @@ jobject: 这是一个实例操作，因为它从这个实例中获得这个field
 [CMakeLists解析](https://www.cnblogs.com/chenxibobo/p/7678389.html)
 [官方 Demo](https://github.com/googlesamples/android-ndk/tree/master/hello-libs)
 [JNI 常用函数](https://www.cnblogs.com/Free-Thinker/p/6168945.html)
-[NDK 开发](https://www.jianshu.com/p/6332418b12b1)
+[NDK 开发1](https://www.jianshu.com/p/6332418b12b1)
+[NDK 开发2](https://www.jianshu.com/p/0261e6cceb3e)
