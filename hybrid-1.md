@@ -110,4 +110,54 @@ button 设置点击事件监听，当输入框值为0是，再去点击 button �
 <button type="button" v-on:click="toPlusInputValue(event)">+</button>
 ```
 
+### 在vue中获取dom元素
 
+在vue中可以通过给标签加ref属性，就可以在js中利用ref去引用它，
+从而操作该dom元素，以下是个例子，可以当做参考
+
+```
+<template>  
+  <div>  
+    <div id="box" ref="mybox">  
+      DEMO  
+    </div>  
+  </div>  
+</template>  
+  
+<script>  
+export default {  
+  data () {  
+    return {  
+        
+    }  
+  },  
+  mounted () {  
+    this.init();  
+  },  
+  methods:{  
+    init() {  
+      const self = this;  
+      this.$refs.mybox.style.color = 'red';  
+    }  
+  }  
+  
+}  
+</script> 
+```
+
+### 在vue中获取自定义属性值
+
+假设有一个标签h5, 我们给它添加了一个自定义属性值，（item.id是从动态添加的）
+点击h5 标签，如何才能获取当前对应的自定义属性值呢？
+```
+<h5 @click='getDataId(item.id)' :data-id="item.id"></h5>
+
+<script>
+    methods: {
+		getDataId(id) {
+            console.log(id);
+        }
+    },
+    
+</script>
+```
