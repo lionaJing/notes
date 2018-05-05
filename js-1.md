@@ -137,3 +137,26 @@ let st3 = new Number(100); //将对象转为数字
 //如果字符串为空，将其转换为0
 //如果字符串包含数字+字符，返回NaN
 ```
+
+### 用 JavaScript 准确获取手机屏幕的宽度和高度
+```
+网页可见区域宽：document.body.clientWidth 
+网页可见区域高：document.body.clientHeight 
+网页可见区域宽：document.body.offsetWidth (包括边线的宽) 
+网页可见区域高：document.body.offsetHeight (包括边线的宽)
+网页正文全文宽：document.body.scrollWidth 
+网页正文全文高：document.body.scrollHeight
+网页被卷去的高：document.body.scrollTop
+网页被卷去的左：document.body.scrollLeft 
+网页正文部分上：window.screenTop 
+网页正文部分左：window.screenLeft
+屏幕分辨率的高：window.screen.height 
+屏幕分辨率的宽：window.screen.width
+屏幕可用工作区高度：window.screen.availHeight
+屏幕可用工作区宽度：window.screen.availWidth
+```
+
+### baidu map js版去除左下角的LOGO
+
+1. 在页面中新增: setInterval(function(){$(".anchorBL").remove();},50);
+2. 在页面中增加样式: .anchorBL{display:none;};
