@@ -165,3 +165,45 @@ export default {
 ### mui 样式
 
 mui-pull-right mui-pull-left mui-text-right mui-text-left
+
+### ajax 请求遇到报 parsererror 错误(error)
+
+先检查 XMLHttpRequest、textStatus
+```
+error:function(XMLHttpRequest, textStatus, errorThrown) {
+	console.log("textStatus 错误信息: "+textStatus);
+	console.log("状态码: "+XMLHttpRequest.status);
+	//打印
+	//textStatus 错误信息: parsererror
+	//状态码: 200(客户端请求已成功)
+}
+
+原因分析：
+1. 如果返回值是 json,看它的引号是单引号还是双引号
+2. 返回值不合法，服务端的问题
+3. 和Header 类型也有关系。及编码header('Content-type: text/html; charset=utf8')
+
+```
+
+### ajax(jQuery) POST 请求传参为 json
+```
+$.ajax({
+	url: "",
+	data: JSON.stringify({name:"jack",pwd:"***"});
+	type:"POST",
+	
+	//根据情况而定，表示接收的数据类型
+	//json: 把获取到的数据作为一个JavaScript对象来解析，并且把构建好的对象作为结果返回
+	//text、xml: 直接显示字符串，text和xml类型返回的数据不会经过处理
+	//html：内嵌的JavaScript都会在HTML作为一个字符串返回之前执行
+	//script：会先执行服务器端生成JavaScript，然后再把脚本作为一个文本数据返回
+	dataType: "json", 
+	
+	//发送信息至服务器时内容编码类型
+	//默认值: "application/x-www-form-urlencoded"
+	contentType: "application/json; charset=utf-8",
+	
+	success:function(data){},
+	error:function() {}
+})
+```
