@@ -70,3 +70,45 @@ dict的key必须是不可变对象
 
 4. set = ([1,2,3,4])
 无序不重复元素集,要创建一个set，需要提供一个list作为输入集合
+
+### python 闭包
+闭包：在外部函数内定义了内部函数，并且内部函数使用了外部函数的变量，最后外部函数返回了外部函数;
+闭包的作用： 可以实现装饰器模式
+
+匿名函数：lambda 表示匿名函数，冒号前面的 x 表示函数参数。
+匿名函数有个限制，就是只能有一个表达式，不写return，返回值就是该表达式的结果。
+
+decorator：decorator 本质上就是一个高阶函数，它接收一个函数作为参数，然后，返回一个新函数。
+```
+def log(f):
+    def fn(x):
+        print('call ' + f.__name__ + '()...')
+        return f(x)
+    return fn
+def show(s):
+	print(s+" call")
+	
+t = show('12')
+
+n = log(show)
+n('34')
+# 输出
+# 12 call
+# call show()...
+# 34 call
+
+```
+python 中引入 @ 标识符，简化了代码的编写，调用时只要在函数的定义前加 @ 和 装饰器名称即可
+*args : 标识一个可迭代列表
+*kw : 表示一个参数字典
+```
+def you(*args):
+	print(args)
+you(1,2,3,4)
+# 输出：(1, 2, 3, 4)
+
+def my(**kw):
+	print(kw)
+my(user='jack',age=26)
+#输出：{'user': 'jack', 'age': 26}
+```

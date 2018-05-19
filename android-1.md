@@ -62,3 +62,5 @@ intent.setData(uri);
 > CATEGORY_APP_CALCLATOR：打开计算器应用
 > CATEGORY_APP_EMAIL：打开email应用
 > CATEGORY_APP_GALLERY：打开画廊应用
+
+### 打开照相机

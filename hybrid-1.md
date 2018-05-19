@@ -164,7 +164,7 @@ export default {
 
 ### mui 样式
 
-mui-pull-right mui-pull-left mui-text-right mui-text-left
+mui-pull-right mui-pull-left mui-text-right mui-text-left mui-ellipsis-2(数字2可变)
 
 ### ajax 请求遇到报 parsererror 错误(error)
 
