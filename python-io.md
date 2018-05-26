@@ -105,5 +105,53 @@ os.remove('test.py')
 ```
 
 ## 序列化
+* dumps() 序列化对象为 bytes
+```
+import pickle
+# 返回一个 bytes
+pickle.dumps(obj)
+```
+ 
+* dump() 序列化对象后写入文件
+```
+import pickle
+file = open('/uesr.text','wb')
+pickle.dump(obj,file)
+file.close()
+```
+* load() 从文件中读取序列化的对象
+```
+file = open('/uesr.text','wb')
+p = pickle.load(file)
+file.close()
+```
+
+## JSON
+* object to JSON
+```
+import json
+class Book(object):
+	def __int__(self,name):
+		self.name = name
+def book2Json(obj):
+	return {
+		'name':obj.name
+	}
+book = Book('<My Book>')
+# dumps() 返回一个 str
+# dump() 将 str 写入文件
+j = json.dumps(book,default=book2Json)
+
+# 简单的方法
+j2 = json.dumps(book1, default=lambda obj: obj.__dict__)
+```
+
+* JSON to Object
+```
+import json
+def json2Book(str):
+	return Book(str['name'])
+obj = json.loads(j2,object_hook = json2Book)
+```
 
 
