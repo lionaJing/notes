@@ -62,11 +62,24 @@ print([x.upper() for x in L if isinstance(x, str) ])
 列表是可变的，有序的。可以随意增加/删除的数据集合
 
 2. tuple = (1,2,3,4)
-元组是有序的，不可变的(不允许删除/修改/增加),当只有一个元素时需要加',':tuple = (1,)
+元组是有序的，不可变的(不允许删除/修改/增加,并不是绝对的),当只有一个元素时需要加',':tuple = (1,);
+可以拆包`name,age,id = mTuple('Jack',26,1212098)`,
+比列表list好的地方: 是不可变对象(性能好,线程安全,可以用作字典的key,可拆包特性)
+```
+mTuple = ('Jack',24,'BeiJing','man','China');
+name,age,*other = mTuple
+print(name,age,other)
+# 打印： Jack,24 ['BeiJing','man','China']
+
+t = ('Jack',[12,13,14])
+t[1].append(15)
+# 元组不可变不是绝对的，将打印： Jack [12,13,14,15]
+# 不建议这么做
+```
 
 3. dict = {'name':'java','age':21,'name':'javaScript','age':18}
 查找和插入的速度极快，不会随着key的增加而变慢；需要占用大量的内存，内存浪费多
-dict的key必须是不可变对象
+dict的key必须是不可变对象(可hash)
 
 4. set = ([1,2,3,4])
 无序不重复元素集,要创建一个set，需要提供一个list作为输入集合
@@ -193,4 +206,49 @@ class Student(obj):
 	def __init__(self, name, age):
 		self.name = name
 		self.age = age
+```
+
+### namedtuple
+nametup;e 是 tuple 的子类
+```
+from collections import namedtuple
+User = namedtuple('User',['name','age','sex','address'])
+user = User(name = 'Jack',age = 12,sex = 'man',address = 'TianJin China')
+# 相当于创建了一个User对象,比自己创建对象要简单、方便
+
+t = ('jack',34,'man')
+user2 = User(*t,'TianJin China')
+# 传入 tuple 初始化 namedtuple,其实就是参数为多个参数(类似：*args,**kwargs)
+
+t1 = ('jack',34,'man','BeiJing')
+user3 = User._make(t1)
+# 使用 _make 方法构建,在构建多参数时可以使用，灵活性不是很高
+
+d = user3._asdict()
+# 转化为字典: {name:jack,age:34...}
+
+name,age,*other = user3
+# 使用了 tuple 的拆包特性
+```
+
+### defaultdict
+
+`setdefault(key, default=Non)`:如果字典中包含有给定键，则返回该键对应的值，否则返回为该键设置的值
+`defaultdict()`:在访问不存在的key时，会抛出keyError的错误，而使用该函数会根据设置的"类型名称"来
+设置默认值(如 defaultdict(int) 会返回 0)
+```
+from collections import defaultdict
+
+d = defaultdict(int)
+# d['a'] 返回 0
+d1 = defaultdict(list)
+# d1['a'] 返回 []
+def show() {
+	return {
+		'name': "",
+		'age' : 23
+	}
+}
+d2 = defaultdict(show)
+# d2['a'] 返回 {'name':'','age':23},(默认值是 dict,通过设置函数返回)
 ```
