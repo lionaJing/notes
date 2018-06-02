@@ -252,3 +252,95 @@ def show() {
 d2 = defaultdict(show)
 # d2['a'] 返回 {'name':'','age':23},(默认值是 dict,通过设置函数返回)
 ```
+
+### deque 双端队列
+deque 是线程安全的,list 不是线程安全的;
+一般容器中是存放相同类型的数据(list,deque),tuple则不同，它可以当作一个对象处理(里面有它的参数)；
+注意它的copy是浅克隆
+
+
+### Counter
+继承与 dict 用于做大量数据的统计
+```
+from collections import Counter
+
+numbers = ['a','a','b','c','b','c','a']
+c = Counter(numbers)
+print(c)
+# 打印： Counter({'a': 3, 'b': 2, 'c': 2})
+# c['a'] 打印 3
+
+m = most_common(3)
+# 这样做性能很好,返回最多前3个元素, [('a',3),('b',2),('c',2)]
+
+c.elements()
+# 返回一个迭代器
+```
+
+### OrderedDict
+dict 的子类， dict 中的 key 是无序的,使用OrderedDict可以保证key的顺序
+它的顺序是指插入的顺序并不是key自身的顺序,OrderedDict 可以实现一个先进先出的 dict,
+当容量超出限制时，可以删除最早添加的key
+```
+from collections import OrderedDict
+
+od = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+print(od)
+print(od.keys())
+# 打印：OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+# odict_keys(['a', 'b', 'c'])
+
+t = od.popitem()
+# 删除最后一个元素，并返回它
+# 打印 t = ('c', 3)
+
+t2 = od.pop('a')
+# 返回 a 所对应的值 1
+
+odd = OrderedDict()
+odd['a'] = 'jack'
+odd['b'] = 'Lee'
+odd['c'] = 'Wang'
+odd.move_to_end('a')
+# 将指定的key移动到末尾
+# OrderedDict([('b', 'Lee'), ('c', 'Wang'), ('a', 'jack')])
+```
+
+### ChainMap
+ChainMap类可把多个字典或者其它映射对象放在一起，组成一个单一的、可更新的映射对象,
+所有传入来的映射对象保存在一个列表里
+```
+from collections import ChainMap
+
+m1 = {'a':'1','b':'2','c':'3'}
+m2 = {'wa':'M','wb':'Q','wc':'Y'}
+
+c = ChainMap(m1,m2)
+print(c.maps)
+# maps 属性返回用户可更新的映射对象列表
+# [{'a': '1', 'b': '2', 'c': '3'}, {'wa': 'M', 'wb': 'Q', 'wc': 'Y'}]
+
+c.maps[0]['a'] = 'apple'
+# 修改元素
+
+m3 = {'a':1,'b':2}
+m4 = {'c':3,'d':4}
+c2 = ChainMap(m3,m4)
+m5 = {'age':23}
+print(c2.maps)
+c2 = c2.new_child(m5)
+print(c2.maps)
+# new_child 创建一个新的ChainMap对象，在列表第一个元素里插入映射对象m，后面紧跟
+# 原来所有映射对象。如果m是None，就插入一个空的字典对象
+# 打印 [{'age': 23}, {'a': 1, 'b': 2}, {'c': 3, 'd': 4}]
+
+x = {'a': 1, 'b': 2}
+y = {'b': 10, 'c': 11}
+z = ChainMap(y, x)
+print(z.maps)
+z = z.parents
+print(z.maps)
+# parents 返回除第一个映射对象之外的所有映射对象的 ChainMap对象
+# [{'b': 10, 'c': 11}, {'a': 1, 'b': 2}]
+# [{'a': 1, 'b': 2}]
+```
