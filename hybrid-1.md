@@ -165,6 +165,8 @@ export default {
 ### mui 样式
 
 mui-pull-right mui-pull-left mui-text-right mui-text-left mui-ellipsis-2(数字2可变)
+mui-media(在列表li上设置则列表有点击效果)
+`<a class="mui-navigate-right"></a> 向右的箭头`
 
 ### ajax 请求遇到报 parsererror 错误(error)
 
