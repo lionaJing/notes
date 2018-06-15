@@ -160,3 +160,12 @@ let st3 = new Number(100); //将对象转为数字
 
 1. 在页面中新增: setInterval(function(){$(".anchorBL").remove();},50);
 2. 在页面中增加样式: .anchorBL{display:none;};
+
+### JavaScript 模块化开发
+
+* CommonJS(node.js) 服务端规范， 同步执行
+* CMD规范(require.js) 浏览器规范, 异步执行(依赖前置，在定义模块的时候就要声明其依赖的模块)
+* CMD规范(SeaJS) 浏览器规范, 异步执行(就近依赖，只有在用到某个模块的时候再去require)
+* ECM6规范：export和import
+
+
