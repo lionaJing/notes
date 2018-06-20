@@ -1,6 +1,6 @@
 # React 相关
 
-了解React之前先看React [whay React](https://www.jianshu.com/p/ae482813b791) [阮一峰 React 技术栈](http://www.ruanyifeng.com/blog/2016/09/react-technology-stack.html)
+了解React之前先看React [whay React(by RK_CODER)](https://www.jianshu.com/p/ae482813b791) [阮一峰 React 技术栈](http://www.ruanyifeng.com/blog/2016/09/react-technology-stack.html)
 
 React 的组件都有自己的组件状态,通过与用户的交互,实现不同状态,然后渲染 UI,让用户界面和数据保持一致。(只需更新组件的 state,
 然后根据新的 state 重新渲染用户界面,不直接操作DOM对象，而是通过虚拟DOM通过diff算法以最小的步骤作用到真实的DOM上)
