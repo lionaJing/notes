@@ -73,3 +73,7 @@ intent.setData(uri);
 依赖关系的对象之间的解耦。一开始是对象 A 对 对象 B 有个依赖，对象 A 主动地创建 对象 B，对象 A 有主动控制权，实现
 了 Ioc 后，对象 A 依赖于 Ioc 容器，对象 A 被动地接受容器提供的对象 B 实例，由主动变为被动，因此称为控制反转。
 注意，控制反转不等同于依赖注入
+
+### Drawable
+
+ContextCompat.getDrawable(context,R.mipmap.ic)
