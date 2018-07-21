@@ -99,6 +99,15 @@ jclass 与 jobject 不同：
 jclass: 是一个类操作，因为它从一个类中获得field的描述
 jobject: 这是一个实例操作，因为它从这个实例中获得这个field的值
 
+### armeabi armeabi-v7a
+armeabi、armeabi-v7a、mips、x86 都是cpu的类型
+mips / mips64: 极少用于手机可以忽略
+x86 / x86_64: x86是可以兼容armeabi平台运行的,打包出的x86的so,总会比armeabi平台的体积更小,可以忽略?
+armeabi:  针对普通的或旧的arm v5 cpu,通用性很强。但是速度慢
+armeabi-v7a:是针对有浮点运算或高级扩展功能的arm v7 cpu(目前主流版本)
+
+同时包含了 armeabi， armeabi-v7a和x86 所有设备都可以运行,同时也会导致包变大
+
 ### 链接
 [NDK 知识梳理(2) CMakeLists.txt ](https://www.aliyun.com/jiaocheng/15077.html?spm=5176.100033.2.6.uX6Ffh)
 [CMakeLists解析](https://www.cnblogs.com/chenxibobo/p/7678389.html)
