@@ -77,3 +77,11 @@ intent.setData(uri);
 ### Drawable
 
 ContextCompat.getDrawable(context,R.mipmap.ic)
+
+## 一些方法
+
+getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
+DIRECTORY_DOWNLOADS 下载的标准目录
+DIRECTORY_DCIM 相机拍摄照片和视频的标准目录
+
+
