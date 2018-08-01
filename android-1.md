@@ -84,4 +84,14 @@ getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
 DIRECTORY_DOWNLOADS 下载的标准目录
 DIRECTORY_DCIM 相机拍摄照片和视频的标准目录
 
+禁止多媒体库扫描指定文件夹下的多媒体文件:在需要不被扫描的文件夹下新建一个隐藏文件,文件名为”.nomedia”即可
+
+
+
+
+
+
+
+
+
 
