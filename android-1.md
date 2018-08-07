@@ -90,6 +90,7 @@ BitmapFactory 解码一个较大文件,会触发内存溢出,BitmapFactory.Optio
 * inDither 设置是否抖动处理
 
 Bitmap二次采样的流程：
+
 1. 获取图片的边框的长度与高度
 ```
 BitmapFactory.Options options = new BitmapFactory.Options();
