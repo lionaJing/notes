@@ -71,7 +71,7 @@ var vue = new Vue({
 ```
 缺点：只能在手动输入/删除 input 值时有效,通过程序改变 input 值无法监听
 
-### 针对点击按钮改变input的值，对该值进行监听(vue + 原生js)
+## 针对点击按钮改变input的值，对该值进行监听(vue + 原生js)
 
 ```
 <div>
@@ -89,7 +89,7 @@ function toPlusValue(event) {
 }
 ```
 
-### mui + vue 的数字输入框存在的问题
+## mui + vue 的数字输入框存在的问题
 
 在 vue 中,给 button 绑定点击事件(如下),如果设置了最小值(比如为 0),同时给 
 button 设置点击事件监听，当输入框值为0是，再去点击 button 点击事件不触发。
@@ -110,7 +110,7 @@ button 设置点击事件监听，当输入框值为0是，再去点击 button �
 <button type="button" v-on:click="toPlusInputValue(event)">+</button>
 ```
 
-### 在vue中获取dom元素
+## 在vue中获取dom元素
 
 在vue中可以通过给标签加ref属性，就可以在js中利用ref去引用它，
 从而操作该dom元素，以下是个例子，可以当做参考
@@ -145,7 +145,7 @@ export default {
 </script> 
 ```
 
-### 在vue中获取自定义属性值
+## 在vue中获取自定义属性值
 
 假设有一个标签h5, 我们给它添加了一个自定义属性值，（item.id是从动态添加的）
 点击h5 标签，如何才能获取当前对应的自定义属性值呢？
@@ -162,13 +162,13 @@ export default {
 </script>
 ```
 
-### mui 样式
+## mui 样式
 
 mui-pull-right mui-pull-left mui-text-right mui-text-left mui-ellipsis-2(数字2可变)
 mui-media(在列表li上设置则列表有点击效果)
 `<a class="mui-navigate-right"></a> 向右的箭头`
 
-### ajax 请求遇到报 parsererror 错误(error)
+## ajax 请求遇到报 parsererror 错误(error)
 
 先检查 XMLHttpRequest、textStatus
 ```
@@ -187,7 +187,7 @@ error:function(XMLHttpRequest, textStatus, errorThrown) {
 
 ```
 
-### ajax(jQuery) POST 请求传参为 json
+## ajax(jQuery) POST 请求传参为 json
 ```
 $.ajax({
 	url: "",
@@ -208,4 +208,14 @@ $.ajax({
 	success:function(data){},
 	error:function() {}
 })
+```
+
+## vue 点击事件传递当前元素
+```
+v-on:click="selectItem($event)"
+
+selectItem:function(event) {
+	var e = event.currentTarget;
+	console.log(e.innerHTML);
+}
 ```
