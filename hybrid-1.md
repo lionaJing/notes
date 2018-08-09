@@ -219,3 +219,12 @@ selectItem:function(event) {
 	console.log(e.innerHTML);
 }
 ```
+
+## vue2.X 列表循环传递当前索引
+```
+<item v-for="obj,index in list">
+	<a v-on:click="onSelectItem(obj,index)"></a>
+</item>
+//参数index需写在item后面
+//不用加 $
+```
