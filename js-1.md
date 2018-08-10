@@ -173,9 +173,9 @@ let st3 = new Number(100); //将对象转为数字
 没有返回值 `() => {}`
 返回对象 `() => ()`
 
-## Set
+## Set Map
 
-一组key的集合,但不存储value,没有重复的key
+Set: 一组key的集合,但不存储value,没有重复的key
 ```
 //set 转化为 Array
 let set = new Set([1,2,3,4]);
@@ -185,10 +185,34 @@ Array.from(set)
 for(var i for set) {
 	console.log(i); //1,2,3,4
 }
-
 set.forEach(function (element, sameElement, set) {
 	console.log(element+","+sameElement);
 	//1,1 2,2 3,3 4,4
 });
+//Set 的容量
+set.size
 ```
+Map: 键值对的结构,一个key只能对应一个value,具有极快的查找速度
+```
+let map = new Map();
+map.set("1","a");
+map.set("2",{"name","jack"});
+map.get("2");
+map.has("2"); //返回 true false
+map.delete("2");
+//遍历 map
+for (var x of map) { // 遍历Map
+  console.log(x[0] + '=' + x[1]);
+}
+map.forEach(function (key, value, map) {
+	console.log(key+","+value);
+});
+//Map 的容量
+map.size
+```
+
+
+
+
+
 
