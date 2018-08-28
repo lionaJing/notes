@@ -1,4 +1,4 @@
-### python 进制转换
+## python 进制转换
 
 1. int(x, base=10) 函数：将一个数字或字符转化为整形(默认十进制)
 ```
@@ -17,15 +17,16 @@ hex(5) # 转十六进制 0x5
 
 3. float(),bool(),str()
 
-### 迭代 list 加下标
+## 迭代 list 加下标
 ```
-# zip 可以合并两个 list
-list = zip([1,2,3],['a','b','c'])
 for i, value in enumerate(['A', 'B', 'C']):
 	print(i+","+value)
 ```
+# zip 可以合并两个 list
+list = zip([1,2,3],['a','b','c'])
 
-### 迭代 dict
+
+## 迭代 dict
 ```
 d = {'a': 1, 'b': 2, 'c': 3}
 # 遍历 key(默认)
@@ -33,7 +34,7 @@ for key in d:
 	print(key)
 	
 # 遍历 value
-for value ind.values():
+for value in d.values():
 	print(value)
 	
 # 遍历 key value
@@ -41,7 +42,7 @@ for k, v in d.items():
 	print(k+"-"+v)
 ```
 
-### 列表生成器
+## 列表生成器
 ```
 # 生成 [1x2, 3x4, 5x6, 7x8, ..., 99x100]
 print([x*(x+1) for x in range(1,100,2)])
@@ -57,7 +58,7 @@ L = ["java","python",176]
 print([x.upper() for x in L if isinstance(x, str) ])
 ```
 
-### list、Tuple、Dict、Set
+## list、Tuple、Dict、Set
 1. list = [1,2,3,4]
 列表是可变的，有序的。可以随意增加/删除的数据集合
 
@@ -84,7 +85,7 @@ dict的key必须是不可变对象(可hash)
 4. set = ([1,2,3,4])
 无序不重复元素集,要创建一个set，需要提供一个list作为输入集合
 
-### python 闭包
+## python 闭包
 闭包：在外部函数内定义了内部函数，并且内部函数使用了外部函数的变量，最后外部函数返回了外部函数;
 闭包的作用： 可以实现装饰器模式
 
@@ -153,7 +154,7 @@ int2('1000000')
 Python是动态语言，解释执行，因此Python代码运行速度慢。
 如果要提高Python代码的运行速度，最简单的方法是把某些关键函数用 C 语言重写，这样就能大大提高执行速度
 
-### python 对象
+## python 对象
 > setattr(self,k,v): 用于设置属性值
 > types.MethodType() :把一个函数变为一个方法
 ```
@@ -180,7 +181,7 @@ class Student(Person):
 		self.age = age
 ```
 
-### 函数
+## 函数
 > dir() 获取变量的所有属性
 > type() 获取变量的类型，它返回一个 Type 对象
 > isinstance() 判断它是否是某种类型的实例
@@ -208,7 +209,7 @@ class Student(obj):
 		self.age = age
 ```
 
-### namedtuple
+## namedtuple
 nametup;e 是 tuple 的子类
 ```
 from collections import namedtuple
@@ -231,7 +232,7 @@ name,age,*other = user3
 # 使用了 tuple 的拆包特性
 ```
 
-### defaultdict
+## defaultdict
 
 `setdefault(key, default=Non)`:如果字典中包含有给定键，则返回该键对应的值，否则返回为该键设置的值
 `defaultdict()`:在访问不存在的key时，会抛出keyError的错误，而使用该函数会根据设置的"类型名称"来
@@ -253,13 +254,13 @@ d2 = defaultdict(show)
 # d2['a'] 返回 {'name':'','age':23},(默认值是 dict,通过设置函数返回)
 ```
 
-### deque 双端队列
+## deque 双端队列
 deque 是线程安全的,list 不是线程安全的;
 一般容器中是存放相同类型的数据(list,deque),tuple则不同，它可以当作一个对象处理(里面有它的参数)；
 注意它的copy是浅克隆
 
 
-### Counter
+## Counter
 继承与 dict 用于做大量数据的统计
 ```
 from collections import Counter
@@ -277,7 +278,7 @@ c.elements()
 # 返回一个迭代器
 ```
 
-### OrderedDict
+## OrderedDict
 dict 的子类， dict 中的 key 是无序的,使用OrderedDict可以保证key的顺序
 它的顺序是指插入的顺序并不是key自身的顺序,OrderedDict 可以实现一个先进先出的 dict,
 当容量超出限制时，可以删除最早添加的key
@@ -306,7 +307,7 @@ odd.move_to_end('a')
 # OrderedDict([('b', 'Lee'), ('c', 'Wang'), ('a', 'jack')])
 ```
 
-### ChainMap
+## ChainMap
 ChainMap类可把多个字典或者其它映射对象放在一起，组成一个单一的、可更新的映射对象,
 所有传入来的映射对象保存在一个列表里
 ```

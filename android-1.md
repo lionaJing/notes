@@ -148,6 +148,21 @@ public static Bitmap decodeSampledBitmapFromResource(Resources res, int resId,
     decodeSampledBitmapFromResource(getResources(), R.id.myimage, 100, 100));
 (官网连接)[https://developer.android.com/topic/performance/graphics/load-bitmap#load-bitmap]
 
+## 記一次 zip4j 解压
+
+在解压(加密了)要获取解压的进度,zip4j 解压可以开启线程解压,解压进度是在这个类中控制 `ProgressMonitor`,同时包括 取消任务,
+实践后结果,加密后解压耗时大于未加密后解压耗时,关于监听解压进度,网上有这么搞的：开启线程,里面死循环,延迟发送消息,当解压进度
+为 100 时,作为跳出循环条件(Handler)
+补充：
+```
+ProgressMonitor p = zipFile.getProgressMonitor();
+long total = progressMonitor.getTotalWork(); //获得全部任务进度,在调用 extractAll 后设置的
+int progress = progressMonitor.getPercentDone(); //获取当前进度
+// 获取结果, 0-success,2-error,1-working,3-cancelled
+int result = progressMonitor.getResult();
+long workCompleted = progressMonitor.getWorkCompleted(); //当前任务值,内部用于计算进度
+```
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
