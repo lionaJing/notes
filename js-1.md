@@ -211,6 +211,10 @@ map.forEach(function (key, value, map) {
 map.size
 ```
 
+## 打印 js Obj 所有属性
+
+console.dir(obj)
+
 
 
 
