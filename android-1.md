@@ -163,6 +163,39 @@ int result = progressMonitor.getResult();
 long workCompleted = progressMonitor.getWorkCompleted(); //当前任务值,内部用于计算进度
 ```
 
+## 记一次AES加密
+
+使用AES加密时密钥长度设置为 128位(一般情况下128位足矣)正常运行,但将密钥设置为 192、256位抛出 `java.security.InvalidKeyException: Illegal key size or default parameters ` 异常
+
+原因：和 Java 的核心类库 JCE（Java Cryptography Extension）有关,JCE是一组包，它们提供用于加密、密钥生成和协商以及 Message Authentication Code（MAC）算法的框架和实现,默认模式下对密钥的长度是限制的
+
+解决：
+对于 JDK
+1. 打开 (Java SE Downloads)[http://www.oracle.com/technetwork/java/javase/downloads/index.html],找到 Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files for JDK/JRE 8 点击 DawnLoad,在下载页面下载
+2. 解压文件得到 local_policy.jar、US_export_policy.jar,将 `Java\jdk1.8\jre\lib\security` 下的替换即可
+
+对与 jre
+1. 进入 Java\jre1.8.0_171\lib\security 目录,打开 `java.security` 文件
+2. 找到 #crypto.policy=unlimited ,默认值是 limited, 放开注释 => crypto.policy=unlimited,即可
+
+```
+//生成密钥
+public String getKey() {
+	try {
+		KeyGenerator kg = KeyGenerator.getInstance("AES");
+		kg.init(192);
+		SecretKey sk = kg.generateKey();
+		byte[] b = sk.getEncoded();
+		return Base64.getEncoder().encodeToString(b);
+	} catch (NoSuchAlgorithmException e) {
+		e.printStackTrace();
+	}
+	return "";
+}
+```
+
+(参考链接)[https://blog.csdn.net/dafeige8/article/details/75637058]
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
