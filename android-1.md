@@ -196,6 +196,23 @@ public String getKey() {
 
 (参考链接)[https://blog.csdn.net/dafeige8/article/details/75637058]
 
+## Android 采集音频
+
+Android 采集音频有两个类: AudioRecord MediaRecorder (AudioRecord vs MediaRecorder)[https://stackoverflow.com/questions/5886872/android-audiorecord-vs-mediarecorder-for-recording-audio]
+1. AudioRecord
+可以处理原始音频流,对其进行实时处理,但不会自动压缩音频,Android6.0 对其有改进,输出的是 PCM 的语音数据,如果保存成音频文件是
+不能被播放器播放的,要用到 AudioTrack 进行处理,基于字节流录音
+> PCM: 脉冲编码调制,是存储音频最直接的机制
+
+(AudioRecord API)[https://developer.android.google.cn/reference/android/media/AudioRecord]
+
+2. MediaRecorder
+基于文件录音,封装度很高，操作简单,无法实现实时处理音频,输出的音频格式少,已集成了录音，编码，压缩等，支持少量的音频格式文件
+(amr 3gp mpeg webm)
+(支持文件格式)[https://developer.android.google.cn/guide/topics/media/media-formats] (MediaRecorder API)[https://developer.android.google.cn/reference/android/media/MediaRecorder]
+
+一个工具类：(MediaUtils)[https://github.com/Werb/MediaUtils]
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
