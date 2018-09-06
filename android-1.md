@@ -245,6 +245,16 @@ Glide 依赖:
 [integration 下载地址](https://github.com/bumptech/glide/tree/master/integration/okhttp3/src/main/java/com/bumptech/glide/integration/okhttp3) 
 [Glide 中文文档](https://muyangmin.github.io/glide-docs-cn/)
 
+## webView 接收所有证书
+
+继承 WebViewClient,重载 onReceivedSslError 方法
+```
+@Override
+public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+	handler.proceed();//接受所有的证书
+}
+```
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
