@@ -213,6 +213,38 @@ Android 采集音频有两个类: AudioRecord MediaRecorder [AudioRecord vs Medi
 
 一个工具类：[MediaUtils](https://github.com/Werb/MediaUtils)
 
+## Glide 加载 Https 图片
+
+针对版本 Glide v4.0
+Glide 支持自定义配置的,所以设置加载 Https 需要在自定义组件里设置,如下：
+```
+@GlideModule
+public class MyAppGlideModule extends AppGlideModule {
+    @Override
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
+        super.registerComponents(context, glide, registry);
+        HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .hostnameVerifier((hostname, session) -> {return true;})
+                .sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager)
+                .build();
+        registry.replace(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(okHttpClient));
+    }
+}
+```
+其中 `HttpsUtils` 是对 SSL 验证的工具类,
+其中 `OkHttpUrlLoader` 需要自己实现,不过 Glide 提供了依赖(针对 OkHttp3): 
+> implementation 'com.github.bumptech.glide:okhttp3-integration:4.7.1@aar'
+> integration 下的代码就 4 个类,还是下载下来,不要依赖了
+
+Glide 依赖:
+> implementation 'com.github.bumptech.glide:glide:4.7.1'
+> implementation 'com.github.bumptech.glide:annotations:4.7.1'
+> annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
+
+[integration 下载地址](https://github.com/bumptech/glide/tree/master/integration/okhttp3/src/main/java/com/bumptech/glide/integration/okhttp3) 
+[Glide 中文文档](https://muyangmin.github.io/glide-docs-cn/)
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
