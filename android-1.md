@@ -255,6 +255,101 @@ public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError e
 }
 ```
 
+## AIDL
+
+* 创建 .aidl 文件
+在 src/main 下新建 aidl 包(并且包结构和项目相同),自定义数据类型需要实现 Parcelable 接口,然后新建 .aidl 定义该类型.
+除了基本数据类型，其他类型的参数都需要标上方向类型：in(输入), out(输出), inout(输入输出)
+```
+// IMyAidlInterface.aidl
+package com.lemon.seeweibo.model.aidl;
+import com.xx.xx.model.aidl.bean.UserBean;
+interface IMyAidlInterface {
+    void addUserBean(in UserBean userBean);
+    UserBean getUserBean();
+    String getString(String message);
+}
+
+
+// UserBean.aidl
+package com.xx.xx.model.aidl.bean;
+parcelable UserBean;
+```
+
+* Make Project 编译项目,会自动生成.aidl接口的实现
+* 写服务端 Service 并注册
+```
+public class MyAidlService extends Service {
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return iBinder;
+    }
+    /**
+     * 创建本地 Binder 对象
+     */
+    private IMyAidlInterface.Stub iBinder = new IMyAidlInterface.Stub() {
+        @Override
+        public void addUserBean(UserBean userBean) throws RemoteException {
+        }
+        @Override
+        public UserBean getUserBean() throws RemoteException {
+            return null;
+        @Override
+        public String getString(String message) throws RemoteException {
+            return null;
+        }
+    };
+}
+
+<service
+	android:name=".model.aidl.MyAidlService"
+	android:enabled="true"
+	android:exported="true"/>
+```
+
+* 写客户端 ServiceConnection
+
+客户端需要将服务端的 .aidl 拷贝过来(包括自定义实体类)
+
+```
+private IMyAidlInterface iMyAidlInterface;
+private ServiceConnection mConnection = new ServiceConnection {
+    private IMyAidlInterface iMyAidlInterface;
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        iMyAidlInterface = IMyAidlInterface.Stub.asInterface(service);
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        iMyAidlInterface = null;
+    }
+    public IMyAidlInterface getiMyAidlInterface() {
+        return iMyAidlInterface;
+    }
+}
+```
+
+* 客户端绑定服务
+
+```
+String servePackageName = ""; //服务端包名
+String serveServiceName = ""; //服务Service名
+ComponentName componentName = new ComponentName( servePackageName ,serveServiceName);
+Intent intent = new Intent();
+intent.setComponent(componentName);
+bindService(intent,serviceConnection, Context.BIND_AUTO_CREATE);
+```
+
+* 开始通讯
+
+```
+iMyAidlInterface.addUserBean(new UserBean("Lee","1278",23));
+iMyAidlInterface.getUserBean();
+```
+[Android 接口定义语言 (AIDL)](https://developer.android.google.cn/guide/components/aidl)
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
