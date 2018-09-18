@@ -350,6 +350,30 @@ iMyAidlInterface.getUserBean();
 ```
 [Android 接口定义语言 (AIDL)](https://developer.android.google.cn/guide/components/aidl)
 
+## 有关内存管理
+
+ActivityManager.getMemoryClass() 可返回当前应用的可用内存大小(单位M)
+OnLowMemory 在系统内存不足时,会杀死所有程序(按照优先级),然后会调用该方法
+OnTrimMemory(int level) 是Android 4.0 之后提供的方法,每次执行优先级计算时都会回调该方法,它返回的状态有：
+
+* TRIM_MEMORY_COMPLETE 该进程在后台进程列表(内存缓存列表)的最后一个,有随时被回收的可能,在这里应该释放一些资源,保证其不被杀死
+* TRIM_MEMORY_MODERATE 该进程在后台进程列表(内存缓存列表)的中间位置
+* TRIM_MEMORY_BACKGROUND 此时系统内存已经较低了,该进程在后台进程(内存缓存列表)最近的位置,目前不会被回收
+* TRIM_MEMORY_UI_HIDDEN 应用从前台切换到后台运行,回收UI资源
+* TRIM_MEMORY_RUNNING_CRITICAL 该进程处于前台运行,系统已经回收了大部分进程
+* TRIM_MEMORY_RUNNING_LOW 该进程处于前台运行,但系统内存已经非常低了
+* TRIM_MEMORY_RUNNING_MODERATE 该进程处于前台运行,但系统内存有点低
+
+OnLowMemory和OnTrimMemory的比较：
+
+1. OnLowMemory被回调时，已经没有后台进程；而onTrimMemory被回调时，还有后台进程。
+2. OnLowMemory是在最后一个后台进程被杀时调用，一般情况是low memory killer 杀进程后触发,而OnTrimMemory的触发更频繁,
+每次计算进程优先级时，只要满足条件，都会触发。
+3. 通过一键清理后，OnLowMemory不会被触发，而OnTrimMemory会被触发一次。
+
+一些内存优化的辅助工具：
+MAT、Heap Viewer、Allocation Tracker、Memory Monitor、LeakCanary
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
