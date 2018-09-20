@@ -374,6 +374,21 @@ OnLowMemory和OnTrimMemory的比较：
 一些内存优化的辅助工具：
 MAT、Heap Viewer、Allocation Tracker、Memory Monitor、LeakCanary
 
+## 线程
+
+* Thread.sleep() 阻塞当前线程,不会释放锁
+* Object.wait() 让出 CPU，释放对象锁
+* Thread.yield() 暂停当前线程,让出CPU给同等优先级的或更高优先级的处于就绪状态的线程,它不会阻塞线程,而是在调用后该线程立即进入就绪状态
+不会释放锁
+* Thread.join() 当前线程进入阻塞状态,需要等待其他线程执行完成才会执行
+* suspend() 和 resume() :suspend()使得线程进入阻塞状态,并且不会自动恢复,只有智执行resume(),才能使得线程重新进入可执行状态
+* interrupt() 中断线程
+* interrupted() 当前线程是否已经中断(返回 boolean)
+* isAlive() 线程是否处于活动状态
+* setPriority() 设置线程优先级(1~10)
+* Object.notify() 随机唤醒某一个线程
+* Object.notifyAll() 唤醒所有线程
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
