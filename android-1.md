@@ -389,6 +389,22 @@ MAT、Heap Viewer、Allocation Tracker、Memory Monitor、LeakCanary
 * Object.notify() 随机唤醒某一个线程
 * Object.notifyAll() 唤醒所有线程
 
+## 多线程中的锁
+
+悲观锁：假定会发生并发冲突,所以每次拿到数据都要加锁,synchronized 就是一种悲观锁,它会使其他线程挂起,等待当前线程释放
+锁,传统的关系型数据库里有很多这种锁机制(读锁、写锁、表锁),可能产生死锁
+
+乐观锁：假设拿数据时不会发生并发冲突,所以不会加锁,如果冲突失败就会重试,植到成功，它使用的机制是 CAS(Compare and Swap),但 CAS 虽然高效解决了
+原子操作,但仍然存在问题:
+
+1. ABA 问题,如果一个值原来是 A,变成了 B, 又变成了 A,那么 CAS 会检查该值并没有改变,但实际改变了,解决办法就是加版本号,每次更新的时候版本加1：
+A1-B2-A3,java 里 atomic 包里提供了 AtomicStampedReference 来解决 ABA 问题,它是通过检查当前引用是否等于预期引用来判断的
+2. 循环时间开销时间大,自旋 CAS 如果长时间不成功,CPU 会带来很大开销
+3. 只能保证一个共享变量的原子操作,当对一个共享变量执行操作时,可以使用 循环 CAS 方式保证原子操作;但当对多个共享变量操作时,循环操作失去
+作用,这时需要使用锁机制 
+
+Java虚拟机对synchronized的优化：偏向锁、轻量级锁、自旋锁
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径

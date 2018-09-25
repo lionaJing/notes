@@ -11,8 +11,8 @@ NDK(Native Development Kit),快速开发C（或C++）的动态库，并能自动
 
 Androdi 进行 NDK 开发有两种方式
 
->* ndk-build + Android.mk + Application.mk(Androdi Studio2.2 之前)
->* CMake + CMakeLists.txt(Android Studio 之后)
+> ndk-build + Android.mk + Application.mk(Androdi Studio2.2 之前)
+> CMake + CMakeLists.txt(Android Studio 之后)
 
 新建一个 project(support C/C++),里面的 CMakeLists.txt 定义了三个方法:
 1. add_library(param1,param2,param3)
@@ -56,7 +56,7 @@ param2: 第三方库 or 系统 NDK 库
 C/C++ 代码通过 NDK 打包成 so 文件，然后与 java 代码进行通讯，而 env 就是通讯的桥梁
 JavaVM : JavaVM 是 Java虚拟机在 JNI 层的代表, JNI 全局仅仅有一个;
 JNIEnv : JavaVM 在线程中的代表,每一个线程都有一个,JNI 中可能有非常多个 JNIEnv;
-是一个指向全部JNI方法的指针,该指针只在创建它的线程有效,不能跨线程传递,此,不同线程的
+是一个指向全部JNI方法的指针,该指针只在创建它的线程有效,不能跨线程传递,因此不同线程的
 JNIEnv是彼此独立的.
 (C++环境下, JNIEnv 是结构体,C语言环境下, JNIEnv是指针)
 
