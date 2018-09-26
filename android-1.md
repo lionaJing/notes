@@ -63,9 +63,6 @@ intent.setData(uri);
 > CATEGORY_APP_EMAIL：打开email应用
 > CATEGORY_APP_GALLERY：打开画廊应用
 
-## 打开照相机
-
-
 ## DI
 
 依赖注入（Dependency Injection，简称 DI）是用于实现控制反转（Inversion of Control，缩写为 IoC）最常见的方式之一，
@@ -404,6 +401,87 @@ A1-B2-A3,java 里 atomic 包里提供了 AtomicStampedReference 来解决 ABA �
 作用,这时需要使用锁机制 
 
 Java虚拟机对synchronized的优化：偏向锁、轻量级锁、自旋锁
+
+## APP 启动方式
+
+* 冷启动: app 第一次启动,当前app进程不存在,系统需要创建进程、初始化(先创建和初始化Application,在创建 activity)
+* 温启动：当 Activity 因为内存不足时被回收，这时不需要重新创建进程,需要重新加载 Activity
+* 热启动：app 进程存在且 Activity 对象仍然在内存中没有被回收,这样启动就避免了对象初始化、布局重绘(不会创建和初始化Application)
+
+测量应用启动时间：
+
+1. adb shell am start -W [packageName]/[packageName.launchActivity]
+
+```
+adb shell am start -W com.git.test/.testActivity
+Starting:xxx                                                            
+Status:ok 
+Activity: com.git.test/.testActivity 
+ThisTime:2871
+TotalTime:2871（应用的启动时间）
+WaitTime: 2949
+Complete
+```
+
+2. 通过 Log 过滤 ActivityManager和Display
+
+启动优化：
+
+* 减少打开的 LaunchActivity 的 view 层级,减少 view 的绘制时间
+* 主线程不要进行耗时操作
+* Application 中初始化第三方的SDK,做成懒加载
+* app 启动的黑屏/白屏,出现原因：启动app时,系统会加载app主题中的windowBackground作为app的预览元素,当app启动时间太长,
+就会出现这种情况(黑屏白屏取决与主题),解决可以通过设置透明主题：
+```
+<style name="Theme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+	<item name="windowActionBar">false</item>
+	<item name="windowNoTitle">true</item>
+	<item name="android:windowFullscreen">true</item>
+	<item name="android:windowBackground">@drawable/p_login_bg</item> //背景图
+</style>
+
+<activity
+	android:name=".ui.SplashActivity"
+	android:theme="@style/Theme.Splash">
+	<intent-filter>
+		<action android:name="android.intent.action.MAIN" />
+		<category android:name="android.intent.category.LAUNCHER" />
+	</intent-filter>
+</activity>
+```
+* 在 application 中开启 IntentService,来进行耗时操作(未验证)
+```
+public class MyApplication extends Application{
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        InitializeService.start(this);
+    }
+}
+
+
+public class InitializeService extends IntentService{
+
+    private static final String ACTION = "TEST";
+
+    public InitializeService(String name) {
+        super("InitializeService");
+    }
+
+    public static void start(Context context){
+        Intent intent = new Intent(context,InitializeService.class);
+        intent.setAction(ACTION);
+        context.startService(intent);
+    }
+
+    @Override
+    protected void onHandleIntent(@Nullable Intent intent) {
+        if(intent!=null){
+			//初始化第三方 sdk
+        }
+    }
+}
+```
 
 ## 一些方法
 
