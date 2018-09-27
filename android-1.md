@@ -402,6 +402,21 @@ A1-B2-A3,java 里 atomic 包里提供了 AtomicStampedReference 来解决 ABA �
 
 Java虚拟机对synchronized的优化：偏向锁、轻量级锁、自旋锁
 
+自旋锁：让当前线程不停地的在循环体内执行实现的，当循环的条件被其他线程改变时 才能进入临界区
+
+公平锁：加锁前先查看是否有排队等待的线程，有的话优先处理排在前面的线程，先来先得。
+非公平锁：线程加锁时直接尝试获取锁，获取不到就自动到队尾等待，非公平锁会有更多的机会去抢占锁
+Java 中通过 ReentrantLock 来实现,大部分场景中使用的是非公平锁,非公平锁性能高于公平锁性能,因为公平锁需要在多核情况下维护一个队列,
+如果当前线程不是队列的第一个,无法获取锁,增加了线程切换次数.
+```
+//创建一个非公平锁，默认是非公平锁
+Lock nonFairLock= new ReentrantLock();
+Lock nonFairLock= new ReentrantLock(false);
+
+//创建一个公平锁，构造传参true
+Lock fairLock= new ReentrantLock(true);
+```
+
 ## APP 启动方式
 
 * 冷启动: app 第一次启动,当前app进程不存在,系统需要创建进程、初始化(先创建和初始化Application,在创建 activity)
