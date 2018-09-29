@@ -63,6 +63,26 @@ intent.setData(uri);
 > CATEGORY_APP_EMAIL：打开email应用
 > CATEGORY_APP_GALLERY：打开画廊应用
 
+## TextView 添加下划线
+
+* 资源文件
+```
+<resources>
+  <string name="hello"><u>Hello</u></string>
+</resources>
+```
+* fromHtml
+```
+TextView textView = findViewById(R.id.tv_name); 
+textView.setText(Html.fromHtml("<u>"+"hello"+"</u>"));
+```
+
+* java
+```
+tvTest.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+tvTest.getPaint().setAntiAlias(true);
+```
+
 ## DI
 
 依赖注入（Dependency Injection，简称 DI）是用于实现控制反转（Inversion of Control，缩写为 IoC）最常见的方式之一，
