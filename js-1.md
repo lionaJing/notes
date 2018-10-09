@@ -231,6 +231,13 @@ getQueryString("参数名");
 //getQueryString("where");
 ```
 
+## js 正则表达式得到()中的内容
+```
+var str="确定(stays)"
+//[^\)]+/g  /\(.+?\)/g
+var n = str.match(/(?<=\()[^\)]+/g)
+console.log(n) //stays
+```
 
 
 
