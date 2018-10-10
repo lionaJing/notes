@@ -518,6 +518,27 @@ public class InitializeService extends IntentService{
 }
 ```
 
+## 关于视频播放的屏幕旋转问题
+
+正常情况下的 activity 生命周期：onCreate -> onStart -> onRestoreInstanceState -> onResume -> onPause ->
+ onSaveInstanceState -> onStop -> onDestory
+
+1. 设置：android:configChanges="orientation", 生命周期会重新走一遍
+2. 设置：android:configChanges="orientation|screenSize" 或 android:configChanges="orientation|screenSize|keyboardHidden"
+生命周期：onCreate -> onStart -> onRestoreInstanceState -> onResume
+切换方向： onConfigurationChanged
+
+强制设置屏幕方向： android:screenOrientation="landscape|portrait|sensor",代码控制：
+setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
+
+视频播放屏幕切换的解决方案：
+
+1. 系统自己决定,设置 android:configChanges="orientation|screenSize|keyboardHidden"
+建立 res/layout-land(横屏布局) res/layout-port(竖屏布局) res/layout(默认布局)
+缺点： 生命周期重走,需要保存播放进度,然后调用 seekTo
+2. 设置 android:configChanges="orientation|screenSize|keyboardHidden" android:screenOrientation="sensor"
+在 onConfigurationChanged 方法中 重新查找控件进行隐藏等操作,可以不需要创建 res/layout-land 等文件夹
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
