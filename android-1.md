@@ -539,6 +539,40 @@ setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE)
 2. 设置 android:configChanges="orientation|screenSize|keyboardHidden" android:screenOrientation="sensor"
 在 onConfigurationChanged 方法中 重新查找控件进行隐藏等操作,可以不需要创建 res/layout-land 等文件夹
 
+## 获取设备唯一ID
+
+Returns the unique device ID, for example, the IMEI for GSM and the MEID
+or ESN for CDMA phones. Return null if device ID is not available
+
+TelephonyManager mTelephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+mTelephonyManager.getDeviceId(); //.getDeviceId(0) .getDeviceId(1)
+mTelephonyManager.getMeid();
+mTelephonyManager.getImei();
+
+[Android获取设备唯一ID的几种方式](https://www.jb51.net/article/115488.htm)
+
+
+```
+public static String getUUID(Context context) {
+     String deviceId = "35" + (Build.BOARD.length() % 10) + (Build.BRAND.length() % 10)
+        + (Build.CPU_ABI.length() % 10) + (Build.DEVICE.length() % 10)
+        + (Build.MANUFACTURER.length() % 10) + (Build.MODEL.length() % 10)
+        + (Build.PRODUCT.length() % 10);
+    String serial = null;
+    final String androidId = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    try {
+		// Go ahead and return the serial for api => 9 
+        serial = android.os.Build.class.getField("SERIAL").get(null).toString();
+        return new UUID(deviceId.hashCode(), serial.hashCode()).toString();
+    } catch (Exception exception) {
+        serial = "serial";
+    }
+	//Thanks @Joe! http://stackoverflow.com/a/2853253/950427 
+	//Finally, combine the values we have found by using the UUID class to create a unique ident
+    return new UUID(deviceId.hashCode(), androidId.hashCode()).toString();
+}
+```
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
