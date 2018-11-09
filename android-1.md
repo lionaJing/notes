@@ -572,6 +572,65 @@ public static String getUUID(Context context) {
     return new UUID(deviceId.hashCode(), androidId.hashCode()).toString();
 }
 ```
+## 关于 app 升级
+
+### < Android 7.0 Nougat(api 24)
+```
+Intent intent = new Intent(Intent.ACTION_VIEW);
+intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+context.startActivity(intent);
+```
+
+### > Android 7.0 Nougat(api 24)
+```
+// 7.0 增加了 FileProvider 用于共享文件
+//AndroidManifest.xml:
+<application
+	...
+	...
+	<provider
+		// 包名 + .fileprovider
+        android:authorities="com.ustcinfo.powermarketing.fileprovider"
+		// 定值
+        android:name="android.support.v4.content.FileProvider"
+		// the FileProvider does not need to be public
+        android:exported="false"
+		//  to allow you to grant temporary access to files
+        android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+    </provider>
+	<activity .../>
+</application>
+
+//res/xml/file_paths.xml:
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <external-path
+		// name: 指定子目录,其他则隐藏; . 代表所有目录
+        name="."
+		// 需要共享的目录
+        path="Android/data/com.ustcinfo.powermarketing" />
+</paths>
+
+// Java
+Intent intent = new Intent(Intent.ACTION_VIEW);
+Uri contentUri = FileProvider.getUriForFile(context,context.getPackageName() + ".fileprovider", file);
+intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+context.startActivity(intent);
+
+// 注意 8.0 手机需要额外添加权限(非动态权限),需要请求未知来源权限
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+```
+
+file-path对应context.getFilesDir()
+cache-path对应getCacheDir()
+external-path对应context#getExternalFileDir(String) Context.getExternalFilesDir(null)
+external-cache-path对应Context.getExternalCacheDir()
 
 ## 一些方法
 
