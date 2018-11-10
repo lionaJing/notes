@@ -241,6 +241,49 @@ console.log(n) //stays
 正则表达式：(?<=(href=")).{1,200}(?=(">))
 解释：(?<=(href=")) 表示 匹配以(href=")开头的字符串，并且捕获(存储)到分组中
       (?=(">)) 表示 匹配以(">)结尾的字符串，并且捕获(存储)到分组中
+	  
+## 有关匹配字符串代码(颜色高亮-来自网络)
+```
+//匹配关键词 拆分
+function highLightKeywords(text, words,tag) {
+	tag = tag || 'span';// 默认的标签，如果没有指定，使用span
+	var i, len = words.length, re;
+	for (i = 0; i < len; i++) {
+		// 正则匹配所有的文本
+		re = new RegExp(words[i], 'g');
+		if (re.test(text)) {
+			text = text.replace(re, '<'+ tag +' style="color:red">$&</'+ tag +'>');
+		}
+	}
+	return text;
+}
+
+
+//匹配整个关键词 不拆分
+function highlight(text, words, tag) {
+	// 默认的标签，如果没有指定，使用span
+	tag = tag || 'span';
+	var i, len = words.length,re;
+	//匹配每一个特殊字符 ，进行转义
+	var specialStr = ["*", ".", "?", "+", "$", "^", "[", "]", "{", "}", "|", "\\", "(", ")", "/", "%"];
+	$.each(specialStr, function(i, item) {
+		if(words.indexOf(item) != -1) {
+			words = words.replace(new RegExp("\\" + item, 'g'), "\\" + item);
+		}
+	});
+	//匹配整个关键词
+	re = new RegExp(words, 'g');
+	if(re.test(text)) {
+		text = text.replace(re, '<' + tag + ' style="color:red">$&</' + tag + '>');
+	}
+	return text;
+}
+
+//调用
+js: innerHTML()
+jQuery: html()
+vue: v-html=""
+```
 
 
 
