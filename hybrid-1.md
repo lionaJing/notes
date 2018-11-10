@@ -162,6 +162,12 @@ export default {
 </script>
 ```
 
+## 列表或标签里动态给自定义属性赋值
+```
+<li v-for="obj in list" :data-name="obj.name">{{obj.address}}</li>
+<p :data-name="obj.name"></p>
+```
+
 ## mui 样式
 
 mui-pull-right mui-pull-left mui-text-right mui-text-left mui-ellipsis-2(数字2可变)
