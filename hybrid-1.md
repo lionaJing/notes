@@ -162,6 +162,12 @@ export default {
 </script>
 ```
 
+## 绑定属性
+```
+<p :class="myClass" :color="myColor">
+v-bind 可简写为 :
+```
+
 ## 列表或标签里动态给自定义属性赋值
 ```
 <li v-for="obj in list" :data-name="obj.name">{{obj.address}}</li>
