@@ -240,3 +240,34 @@ selectItem:function(event) {
 //参数index需写在item后面
 //不用加 $
 ```
+
+## mui 页面不能复制
+添加样式
+```
+<style>
+	*{ 	
+		-webkit-touch-callout:all;
+		-webkit-user-select:all;
+		-khtml-user-select:all;
+		-moz-user-select:all;
+		-ms-user-select:all;
+		user-select:all;
+	}
+</style>
+```
+user-select：让页面的内容可不可以被选择复制
+none - 不能选择文本
+text - 对选择没有限制
+all - 目标整体被选中
+
+-webkit-user-select: 针对谷歌浏览器和谷歌移动平台
+none - 不能选择文本
+text - 对选择没有限制
+all - 目标整体被选中
+
+-webkit-touch-callout:不规范的属性,当你触摸并按住触摸目标时候，禁止或显示系统默认菜单
+none - 系统默认菜单被禁用
+inherit - 系统默认菜单不被禁用(默认值)
+
+-moz-user-select: 火狐浏览器
+
