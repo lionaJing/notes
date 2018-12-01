@@ -632,6 +632,34 @@ cache-path对应getCacheDir()
 external-path对应context#getExternalFileDir(String) Context.getExternalFilesDir(null)
 external-cache-path对应Context.getExternalCacheDir()
 
+### 8.0 检测权限
+```
+private void installAPK(){
+	if (Build.VERSION.SDK_INT >= 26) {
+		boolean flag = getPackageManager().canRequestPackageInstalls();
+		if (flag) {
+			//安装应用
+		} else {
+			//跳转至“安装未知应用”权限界面，引导用户开启权限
+			Uri selfPackageUri = Uri.parse("package:" + this.getPackageName());
+			Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, selfPackageUri);
+			startActivityForResult(intent, REQUEST_CODE_UNKNOWN_APP);
+		}
+	}else {
+		//安装应用
+	}
+
+}
+//接收“安装未知应用”权限的开启结果
+@Override
+protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	super.onActivityResult(requestCode, resultCode, data);
+	if (requestCode == REQUEST_CODE_UNKNOWN_APP) {
+		installAPK();
+	}
+}
+```
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
