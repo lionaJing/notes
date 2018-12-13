@@ -108,10 +108,29 @@ armeabi-v7a:是针对有浮点运算或高级扩展功能的arm v7 cpu(目前主
 
 同时包含了 armeabi， armeabi-v7a和x86 所有设备都可以运行,同时也会导致包变大
 
+### 问题
+
+提示 "mips64el-linux-android-strip" 错误
+原因: NDK r17 之后不再支持 mips 平台
+解决：build.gradle 增加配置
+```
+android {
+
+	defaultConfig {
+		.....
+	}
+
+	packagingOptions { 
+		doNotStrip '*/mips/*.so' 
+		doNotStrip '*/mips64/*.so' 
+	}
+}
+```
+
 ### 链接
-[NDK 知识梳理(2) CMakeLists.txt ](https://www.aliyun.com/jiaocheng/15077.html?spm=5176.100033.2.6.uX6Ffh)
-[CMakeLists解析](https://www.cnblogs.com/chenxibobo/p/7678389.html)
-[官方 Demo](https://github.com/googlesamples/android-ndk/tree/master/hello-libs)
-[JNI 常用函数](https://www.cnblogs.com/Free-Thinker/p/6168945.html)
-[NDK 开发1](https://www.jianshu.com/p/6332418b12b1)
-[NDK 开发2](https://www.jianshu.com/p/0261e6cceb3e)
+[NDK 知识梳理(2) CMakeLists.txt ](https://www.aliyun.com/jiaocheng/15077.html?spm=5176.100033.2.6.uX6Ffh )
+[CMakeLists解析](https://www.cnblogs.com/chenxibobo/p/7678389.html )
+[官方 Demo](https://github.com/googlesamples/android-ndk/tree/master/hello-libs )
+[JNI 常用函数](https://www.cnblogs.com/Free-Thinker/p/6168945.html )
+[NDK 开发1](https://www.jianshu.com/p/6332418b12b1 )
+[NDK 开发2](https://www.jianshu.com/p/0261e6cceb3e )
