@@ -660,6 +660,37 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
+## LOG 日志
+v 详细[黑色]
+d 调试[蓝色]
+i 普通通知[绿色]
+e 错误[红色]
+w 警告[橙色]
+
+控制日志
+* 方式1
+```
+buildTypes {
+	debug{
+		buildConfigField "boolean", "LOG_SHOW", "true"
+	}
+	release{
+		buildConfigField "boolean", "LOG_SHOW", "false"
+	}
+}
+
+isDebug = BuildConfig.LOG_SHOW
+if(isDebug)
+	Log.d(TAG,"")
+```
+
+* 方式2
+```
+isDebug = BuildConfig.DEBUG
+if(isDebug)
+	Log.d(TAG,"")
+```
+
 ## 一些方法
 
 getExternalFilesDir(Environment.DIRECTORY_PICTURES) 获得系统相册路径
